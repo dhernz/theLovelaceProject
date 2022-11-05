@@ -4,8 +4,7 @@ import {
   Heading,
   Container,
   Text,
-  Stack,
-  Flex
+  Stack
 } from '@chakra-ui/react';
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
