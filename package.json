@@ -1,7 +1,33 @@
 {
-  "name": "hardhat-project",
-  "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
-    "hardhat": "^2.12.2"
-  }
+  "name": "@lovelace/monorepo",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "author": "H.E.R. DAO LATAM",
+  "keywords": [
+    "ethereum",
+    "next",
+    "hardhat",
+    "rainbow",
+    "polygon",
+    "graph",
+    "monorepo",
+    "yarn",
+    "wagmi",
+    "starter",
+    "boilerplate"
+  ],
+  "scripts": {
+    "build": "yarn workspace @lovelace/next-app build",
+    "start": "yarn workspace @lovelace/next-app start",
+    "dev": "yarn workspace @lovelace/next-app dev",
+    "node": "yarn workspace @lovelace/hardhat chain",
+    "compile": "yarn workspace @lovelace/hardhat compile",
+    "deploy": "yarn workspace @lovelace/hardhat deploy",
+    "buyMeCoffee": "yarn workspace @lovelace/hardhat buyMeCoffee"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {}
 }
