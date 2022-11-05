@@ -4,8 +4,10 @@ import {
   Heading,
   Container,
   Text,
-  Stack
+  Stack,
+  Flex
 } from '@chakra-ui/react';
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 export default function Hero() {
   return (
@@ -29,6 +31,14 @@ export default function Hero() {
           <Text>
             add text here
           </Text>
+            <Stack
+              direction={'column'}
+              spacing={3}
+              align={'center'}
+              alignSelf={'center'}
+              position={'relative'}>
+              <ConnectButton />
+            </Stack>
         </Stack>
       </Container>
     </>
