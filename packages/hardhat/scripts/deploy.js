@@ -1,31 +1,49 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
-// will compile your contracts, add the Hardhat Runtime Environment's members to the
-// global scope, and execute the script.
 const hre = require("hardhat");
+const fs = require("fs");
+
+const EXPOSED_KEY =
+  "8da4ef21b864d2cc526dbdb2a120bd2874c36c9d0a1fb7f8c63d7f7a8b41de8f";
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
+  const wallet = (process.env.MNEMONIC && process.env.MNEMONIC.length > 0) ? 
+  ethers.Wallet.fromMnemonic(process.env.MNEMONIC) : 
+  new ethers.Wallet(process.env.PRIVATE_KEY ?? EXPOSED_KEY);
+  console.log(`Using address ${wallet.address}`);
 
-  const lockedAmount = hre.ethers.utils.parseEther("1");
-
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
-
-  await lock.deployed();
-
-  console.log(
-    `Lock with 1 ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
+  const provider = new ethers.providers.AlchemyProvider(
+    "maticmum",
+    process.env.MUMBAI_ALCHEMY_KEY
   );
+
+  const signer = wallet.connect(provider);
+
+  const balanceBN = await signer.getBalance();
+  const balance = Number(ethers.utils.formatEther(balanceBN));
+  console.log(`Wallet balance ${balance}`);
+
+  if (balance < 0.01) {
+    throw new Error("Not enough Matic");
+  }
+
+  const contractFactory = await hre.ethers.getContractFactory("Lovelace NFT");
+  
+  const contract = await contractFactory.deploy();
+
+  console.log("Deploying contract...");
+  console.log("Awaiting confirmations");
+
+  await contract.deployed();
+
+  fs.writeFileSync(
+    "../next-app/utils/contractAddress.js",
+    `export const contractAddress = "${HolaMundoContrato.address}"`
+  );
+  console.log("Contract address saved in ../next-app/utils/contractAddress.js");
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
