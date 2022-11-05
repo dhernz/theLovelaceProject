@@ -25,7 +25,7 @@ async function main() {
     throw new Error("Not enough Matic");
   }
 
-  const contractFactory = await hre.ethers.getContractFactory("Lovelace NFT");
+  const contractFactory = await hre.ethers.getContractFactory("LovelaceNFT");
   
   const contract = await contractFactory.deploy();
 
@@ -36,7 +36,7 @@ async function main() {
 
   fs.writeFileSync(
     "../next-app/utils/contractAddress.js",
-    `export const contractAddress = "${HolaMundoContrato.address}"`
+    `export const contractAddress = "${contract.address}"`
   );
   console.log("Contract address saved in ../next-app/utils/contractAddress.js");
 }

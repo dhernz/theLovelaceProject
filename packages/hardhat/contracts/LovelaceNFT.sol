@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
-import "hardhat/console.sol";
+pragma solidity ^0.8.12;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
@@ -57,7 +56,6 @@ contract LovelaceNFT is ERC721, ERC721URIStorage, Ownable, EIP712, ERC721Votes {
             Base64.encode(svg))
           );
 
-        if (data.level == 8) console.log(base64img);
         return base64img;
     }    
     
@@ -80,12 +78,17 @@ contract LovelaceNFT is ERC721, ERC721URIStorage, Ownable, EIP712, ERC721Votes {
 
 
     function getTokenURI(uint256 id) private returns (string memory){
+      FlowerStats storage currentFlower = idToFlowerStats[id];
       bytes memory dataURI = abi.encodePacked(
-          '{',
-              '"name": "Blossoming Flower #', id.toString(), '",',
-              '"description": "All beings are flowers blooming in a blossoming universe.",',
-              '"image": "', generateFlower(id), '"',
-          '}'
+      '{',
+          '"name": "Lovelace Governance SBT #', id.toString(), '",',
+          '"description": "Corruption is the enemy of development, and of good governance. It must be got rid of. Both the government and the people at large must come together to achieve this national objective.",',
+          '"image": "', generateFlower(id), '",',
+          '"attributes": [{',
+                '"trait_type": "Level",',
+                '"value":"', currentFlower.level, '",',
+          '}]'
+      '}'
       );
       return string(
           abi.encodePacked(
