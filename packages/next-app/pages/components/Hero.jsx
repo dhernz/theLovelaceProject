@@ -4,14 +4,17 @@ import {
   Heading,
   Container,
   Text,
-  Stack
+  Stack,
+  Button,
+  Img,
+  useMediaQuery
 } from '@chakra-ui/react';
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import {WorldIDWidget} from "@worldcoin/id";
+import { useAccount } from 'wagmi';
+import Choose from './Choose';
 
 export default function Hero() {
-  const actionId = process.env.WORLD_ID
-
+  const { isConnected } = useAccount()
   return (
     <>
       <Container maxW={'3xl'}>
@@ -49,7 +52,8 @@ export default function Hero() {
               align={'center'}
               alignSelf={'center'}
               position={'relative'}>
-              <ConnectButton />
+                <ConnectButton/>
+                { isConnected && <Choose/>}
             </Stack>
         </Stack>
       </Container>

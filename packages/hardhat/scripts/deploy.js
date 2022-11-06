@@ -49,7 +49,19 @@ async function main() {
     "../next-app/utils/contractAddress.js",
     `export const contractAddress = "${contract.address}"`
   );
+
+  console.log("Address: ", contract.address);
   console.log("Contract address saved in ../next-app/utils/contractAddress.js");
+
+  console.log("Minting Flower #1...");
+  let txn = await contract.mint("H.E.R. DAO LATAM", "#5585b5", "#bbe4e9", "#ff6f3c"); // bg, font, seed
+  await txn.wait();
+  console.log("Minted!");
+
+  console.log("Watering Flower...");
+  txn = await contract.upgrade(1, "#a1dd70", {gasLimit: 1000});
+  await txn.wait();
+  console.log("Done Watering! Pedal #1 Blossomed.");
 }
 
 <<<<<<< HEAD

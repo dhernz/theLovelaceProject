@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.12;
+
+import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
@@ -78,24 +80,28 @@ contract LovelaceNFT is ERC721, ERC721URIStorage, Ownable, EIP712, ERC721Votes {
 
 
     function getTokenURI(uint256 id) private returns (string memory){
-      FlowerStats storage currentFlower = idToFlowerStats[id];
+      FlowerStats storage data = idToFlowerStats[id];
       bytes memory dataURI = abi.encodePacked(
       '{',
           '"name": "Lovelace Governance SBT #', id.toString(), '",',
           '"description": "Corruption is the enemy of development, and of good governance. It must be got rid of. Both the government and the people at large must come together to achieve this national objective.",',
           '"image": "', generateFlower(id), '",',
           '"attributes": [{',
-                '"trait_type": "Level",',
-                '"value":"', currentFlower.level.toString(), '",',
+                '"trait_type": "Level", ',
+                '"value": "', data.level.toString(),'"',
           '}]'
       '}'
       );
-      return string(
+
+      string memory base64str = string(
           abi.encodePacked(
               "data:application/json;base64,",
               Base64.encode(dataURI)
           )
       );
+
+      console.log(base64str);
+      return base64str;
     }
 
     function mint(string memory name, 
@@ -119,8 +125,7 @@ contract LovelaceNFT is ERC721, ERC721URIStorage, Ownable, EIP712, ERC721Votes {
       FlowerStats storage currentFlower = idToFlowerStats[id];
       uint256 currentLevel = currentFlower.level;
       require(_exists(id));
-      require(ownerOf(id) == msg.sender, "You must own this NFT to upgrade it!");
-      require(currentLevel <= 8, "Your flower is done growing.");
+      require(currentLevel <= 8, "Your NFT reached completion.");
 
       currentFlower.level = currentLevel + 1;
       idToFlowerStats[id] = currentFlower;
