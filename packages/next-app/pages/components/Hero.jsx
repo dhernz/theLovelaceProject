@@ -4,11 +4,19 @@ import {
   Heading,
   Container,
   Text,
-  Stack
+  Stack,
+  Button,
+  Img,
+  useMediaQuery
 } from '@chakra-ui/react';
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAccount, useConnect } from 'wagmi';
+
 
 export default function Hero() {
+  const { connector: activeConnector, isConnected } = useAccount()
+  const { connect, connectors, error, isLoading, pendingConnector } = useConnect()
+  const [isLargerThanLG] = useMediaQuery('(min-width: 62em)');
   return (
     <>
       <Container maxW={'3xl'}>
@@ -36,7 +44,36 @@ export default function Hero() {
               align={'center'}
               alignSelf={'center'}
               position={'relative'}>
-              <ConnectButton />
+                <ConnectButton/>
+                { isConnected ?  
+                <Stack>
+                  <Button
+                      w="200px"
+                      colorScheme="blue"
+                      variant="solid"
+                      h="50px"
+                      size={isLargerThanLG ? 'lg' : 'md'}
+                      mb={isLargerThanLG ? '0' : '10'}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href='/admin-dashboard';
+                    }}>
+                  Admin
+                </Button>                             
+                <Button
+                      w="200px"
+                      colorScheme="blue"
+                      variant="solid"
+                      h="50px"
+                      size={isLargerThanLG ? 'lg' : 'md'}
+                      mb={isLargerThanLG ? '0' : '10'}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href='/member-dashboard';
+                    }}>
+                  Member
+                </Button> 
+              </Stack> : ""}
             </Stack>
         </Stack>
       </Container>
