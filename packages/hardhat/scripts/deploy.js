@@ -48,7 +48,7 @@ async function main() {
   console.log("Minted!");
 
   console.log("Watering Flower...");
-  txn = await contract.upgrade(1, "#a1dd70", {});
+  txn = await contract.upgrade(1, "#a1dd70", {gasLimit: 1000});
   await txn.wait();
   console.log("Done Watering! Pedal #1 Blossomed.");
 }
