@@ -10,11 +10,10 @@ import {
   useMediaQuery
 } from '@chakra-ui/react';
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useAccount } from 'wagmi';
-import Choose from './Choose';
+import MemberButton from './ChooseMember';
+import AdminButton from './ChooseAdmin';
 
 export default function Hero() {
-  const { isConnected } = useAccount()
   return (
     <>
       <Container maxW={'3xl'}>
@@ -43,7 +42,8 @@ export default function Hero() {
               alignSelf={'center'}
               position={'relative'}>
                 <ConnectButton/>
-                { isConnected && <Choose/>}
+                <AdminButton/>
+                <MemberButton/>
             </Stack>
         </Stack>
       </Container>
