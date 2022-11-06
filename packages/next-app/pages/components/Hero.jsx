@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount, useConnect } from 'wagmi';
-
+import Choose from './Choose';
 
 export default function Hero() {
   const { connector: activeConnector, isConnected } = useAccount()
@@ -45,35 +45,7 @@ export default function Hero() {
               alignSelf={'center'}
               position={'relative'}>
                 <ConnectButton/>
-                { isConnected ?  
-                <Stack>
-                  <Button
-                      w="200px"
-                      colorScheme="blue"
-                      variant="solid"
-                      h="50px"
-                      size={isLargerThanLG ? 'lg' : 'md'}
-                      mb={isLargerThanLG ? '0' : '10'}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        window.location.href='/admin-dashboard';
-                    }}>
-                  Admin
-                </Button>                             
-                <Button
-                      w="200px"
-                      colorScheme="blue"
-                      variant="solid"
-                      h="50px"
-                      size={isLargerThanLG ? 'lg' : 'md'}
-                      mb={isLargerThanLG ? '0' : '10'}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        window.location.href='/member-dashboard';
-                    }}>
-                  Member
-                </Button> 
-              </Stack> : ""}
+                { isConnected && <Choose/>}
             </Stack>
         </Stack>
       </Container>
