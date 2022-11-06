@@ -7,8 +7,11 @@ import {
   Stack
 } from '@chakra-ui/react';
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import {WorldIDWidget} from "@worldcoin/id";
 
 export default function Hero() {
+  const actionId = process.env.WORLD_ID
+
   return (
     <>
       <Container maxW={'3xl'}>
@@ -28,7 +31,17 @@ export default function Hero() {
             Project <br/>
           </Heading>
           <Text>
-            add text here
+          <WorldIDWidget
+          actionId={actionId}
+          signal="sign_up"
+          enableTelemetry
+          onSuccess={(verificationResponse) =>
+            console.log(verificationResponse)
+          } 
+          onError={(error) => console.error(error)}
+        />
+
+            add text hereee
           </Text>
             <Stack
               direction={'column'}

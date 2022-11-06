@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
 require("dotenv").config();
@@ -32,3 +33,19 @@ module.exports = {
     }
   }
 };
+=======
+require("@nomicfoundation/hardhat-toolbox");
+require("dotenv").config();
+
+
+/** @type import('hardhat/config').HardhatUserConfig */
+module.exports = {
+  solidity: "0.8.17",
+  networks: {
+    "optimism-goerli":{
+      url:"https://goerli.optimism.io",
+      accounts: [process.env.PRIVKEY]
+    }
+  }
+};
+>>>>>>> 9c3a2695097116b34177b08dd06a866c79ea635f
