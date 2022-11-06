@@ -1,16 +1,11 @@
 import React from "react";
 import {
-  Box,
-  Heading,
-  Container,
-  Text,
   Stack,
   Button,
-  Img,
   useMediaQuery
 } from '@chakra-ui/react';
 
-export default function Hero() {
+export default function Choose() {
   const [isLargerThanLG] = useMediaQuery('(min-width: 62em)');
   return (
     <>

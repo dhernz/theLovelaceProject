@@ -28,7 +28,7 @@ import {
   // Icon
   import { BsPerson } from 'react-icons/bs';
 
-  export default function Form() {
+  export default function Admin() {
     const toast = useToast();
     return (
     <div>

@@ -10,13 +10,11 @@ import {
   useMediaQuery
 } from '@chakra-ui/react';
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useAccount, useConnect } from 'wagmi';
+import { useAccount } from 'wagmi';
 import Choose from './Choose';
 
 export default function Hero() {
-  const { connector: activeConnector, isConnected } = useAccount()
-  const { connect, connectors, error, isLoading, pendingConnector } = useConnect()
-  const [isLargerThanLG] = useMediaQuery('(min-width: 62em)');
+  const { isConnected } = useAccount()
   return (
     <>
       <Container maxW={'3xl'}>
